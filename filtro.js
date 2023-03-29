@@ -7,38 +7,49 @@ const productos = [
   {nombre: "Bota azul", tipo: "bota", color: "azul", img: "./bota-azul.jpg"},
   {nombre: "Zapato rojo", tipo: "zapato", color: "rojo", img: "./zapato-rojo.jpg"}
 ]
+/*Los siguientes elementos deben declararse dentro de la función para que estén actualizados al momento de ser usados */
+// const li = document.getElementsByName("lista-de-productos") 
+// const $i = document.querySelector('#input');
 
-const li = document.getElementsByName("lista-de-productos")
-const $i = document.querySelector('.input');
 
-for (let i = 0; i < productos.length; i++) {
-  var d = document.createElement("div")
-  d.classList.add("producto")
 
-  var ti = document.createElement("p")
-  ti.classList.add("titulo")
-  ti.textContent = productos[i].nombre
-  
-  var imagen = document.createElement("img");
-  imagen.setAttribute('src', productos[i].img);
+const displayProductos = () => {
+  const li = document.getElementById("lista-de-productos");
+  for (let i = 0; i < productos.length; i++) {
+    var d = document.createElement("div");
+    d.classList.add("producto");
 
-  d.appendChild(ti)
-  d.appendChild(imagen)
+    var ti = document.createElement("p");
+    ti.classList.add("titulo");
+    ti.textContent = productos[i].nombre;
+    
+    var imagen = document.createElement("img");
+    imagen.setAttribute('src', productos[i].img);
 
-  li.appendChild(d)
+    d.appendChild(ti);
+    d.appendChild(imagen);
+
+    li.appendChild(d);
+    }
 }
-
-displayProductos(productos)
+/*La funcion no estaba declarada */
+displayProductos(productos);  
 const botonDeFiltro = document.querySelector("button");
 
 botonDeFiltro.onclick = function() {
+  /*Se corrige la declaracion de variables, se realiza dentro de la funcion y se coloca un id al inputo para que sea reconocido ya que estaba como clase y en html no estaba identificado, además que debe usarse un id, las variables deben ser declaradas al inicio de la funcion */
+  const li = document.getElementById("lista-de-productos");
+  const $i = document.querySelector('#input');
+  const texto = $i.value;
+  console.log(texto);
+  const productosFiltrados = filtrado(productos, texto );
+  console.log(li);
+console.log(li.firstChild);
   while (li.firstChild) {
     li.removeChild(li.firstChild);
   }
 
-  const texto = $i.value;
-  console.log(texto);
-  const productosFiltrados = filtrado(productos, texto );
+ 
 
   for (let i = 0; i < productosFiltrados.length; i++) {
     var d = document.createElement("div")
